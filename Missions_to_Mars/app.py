@@ -11,7 +11,7 @@ client = pymongo.MongoClient(conn)
 
 # Route to render index.html template using data from Mongo
 @app.route("/")
-def home():
+def index():
 
     # Find one record of data from the mongo database
     mars_collection_data = mongo.db.collection.find_one()
@@ -24,7 +24,7 @@ def home():
 def scrape():
 
     # Run the scrape function
-    mars_data = scrape_mars.scrape_web()
+    mars_data = scrape_mars.scrape()
 
     
     mongo.db.collection.update({}, mars_data, upsert=True)

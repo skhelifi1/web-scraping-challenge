@@ -1,0 +1,30 @@
+import pandas as pd
+from IPython.display import HTML
+import os
+import requests
+from bs4 import BeautifulSoup as bs
+from splinter import Browser
+from webdriver_manager.chrome import ChromeDriverManager
+
+def init_bs():
+    url= "https://mars.nasa.gov/news/"
+    response = requests.get(url)
+    return soup = bs(response.text, 'html.parser')
+
+def init_browser():
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
+    url= "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
+    browser.visit(url)
+    return browser
+
+
+def scrape():
+    #title and paragraph
+    news_title= soup.find_all("div",class_="content_title")
+    news_title_text= news_title[0].text
+    news_prg= soup.find_all("div",class_="rollover_description_inner")
+    news_prg_text= news_prg[0].text
+    #Featured Image
+    featured= soup.find("div", class_="fancybox-inner")
+    featured_img=featured.img["src"]
