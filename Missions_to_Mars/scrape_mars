@@ -29,3 +29,14 @@ def scrape():
     #Featured Image
     featured= soup.find("div", class_="fancybox-inner")
     featured_img=featured.img["src"]
+
+mars_data={
+    "news_title": news_title,
+    "news_p": news_prg,
+    "featured_img": featured_img,
+    "title_url_dict": title_url_dict
+}
+
+ return render_template("index.html", mars_data=mars_data)
+if __name__ == "__main__":
+    app.run(debug=True)

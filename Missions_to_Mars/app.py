@@ -1,11 +1,11 @@
 from flask import Flask, render_template, redirect
-import PyMongo
+import pymongo
 import scrape_mars
 
 # set up Flask
 app = Flask(__name__)
 
-# connect to Mongo
+# connect to mongoclient
 conn = "mongodb://localhost:27017/mars"
 client = pymongo.MongoClient(conn)
 
@@ -14,7 +14,7 @@ client = pymongo.MongoClient(conn)
 def index():
 
     # Find one record of data from the mongo database
-    mars_collection_data = mongo.db.collection.find_one()
+    mars_collection_data = pymongo.db.collection.find_one()
 
     # Return template and data
     return render_template("index.html", mars_data_init=mars_collection_data)
@@ -27,7 +27,7 @@ def scrape():
     mars_data = scrape_mars.scrape()
 
     
-    mongo.db.collection.update({}, mars_data, upsert=True)
+    pymongo.db.collection.update({}, mars_data, upsert=True)
 
     # Redirect back to home page
     return redirect("/")
