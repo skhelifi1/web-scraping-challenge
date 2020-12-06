@@ -18,6 +18,7 @@ def init_browser():
     browser.visit(url)
     return browser
 
+    browser.quit()
 
 def scrape():
     #title and paragraph
